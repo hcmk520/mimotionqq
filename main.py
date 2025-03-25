@@ -71,13 +71,11 @@ def getBeijinTime():
         getWeather()
     r = requests.get(url=url, headers=hea)
     if r.status_code == 200:
-        result = r.text
-        pattern = re.compile('\\d{4}-\\d{2}-\\d{2} (\\d{2}):\\d{2}:\\d{2}')
-        find = re.search(pattern, result)
-        hour = find.group(1)
         fixed_step = 20000  # 用户设定的固定步数
         min_1 = fixed_step
         max_1 = fixed_step
+        min_1 = int(K * min_1)  # 实际不会改变数值
+        max_1 = int(K * max_1)  # 实际不会改变数值
     else:
         print("获取北京时间失败")
         return
@@ -88,15 +86,12 @@ def getBeijinTime():
         user_list = user_mi.split('#')
         passwd_list = passwd_mi.split('#')
         if len(user_list) == len(passwd_list):
-            if K != 1.0:
-                msg_mi = "由于天气" + type + "，已设置降低步数,系数为" + str(K) + "。\n"
-            else:
-                msg_mi = ""
+            msg_mi = "[强制模式] 已设置固定步数20000\n" 
             for user_mi, passwd_mi in zip(user_list, passwd_list):
                 msg_mi += main(user_mi, passwd_mi, min_1, max_1)
                 # print(msg_mi)
     else:
-        print("当前主人设置了0步数呢，本次不提交")
+        print("步数被错误计算为0，请检查代码")
         return
 
 
