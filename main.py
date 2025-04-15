@@ -71,7 +71,7 @@ def getBeijinTime():
         getWeather()
     r = requests.get(url=url, headers=hea)
     if r.status_code == 200:
-        fixed_step = 11273  # 用户设定的固定步数
+        fixed_step = 10971  # 用户设定的固定步数
         min_1 = fixed_step
         max_1 = fixed_step
         min_1 = int(K * min_1)  # 实际不会改变数值
